@@ -1,49 +1,35 @@
 package com.example.candidature.controller;
 
-import com.example.candidature.util.EmailSender;
-import com.example.candidature.util.EmailTemplateService;
-
+import com.example.candidature.service.MailService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/mails")
 public class MailController {
 
-    private final EmailSender emailSender;
-    private final EmailTemplateService templateService;
+    private final MailService mailService;
 
-    public MailController(EmailSender emailSender, EmailTemplateService templateService) {
-        this.emailSender = emailSender;
-        this.templateService = templateService;
+    public MailController(MailService mailService) {
+        this.mailService = mailService;
     }
 
     @PostMapping("/appel")
-    public ResponseEntity<String> sendAppelTemplateMultiple(
-            @RequestBody MailRequest request
-    ) {
-        if (request.getRecipients() == null ||  request.getRecipients().size()<1) {
-            return new ResponseEntity<>("Empty recipients list", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> sendAppelTemplateByOfferId(@RequestBody MailRequest request) {
+        if (request == null || request.getOfferId() == null) {
+            return new ResponseEntity<>("Missing offerId", HttpStatus.BAD_REQUEST);
         }
 
-        String content = templateService.renderOfferTemplate(request.getOfferName());
-        emailSender.sendAppelMail(request.getRecipients(), "Nouvel appel à candidature", content);
-        return ResponseEntity.ok("Mail sent successfully to " + request.getRecipients().size() + " recipients");
+        mailService.sendAppelByOfferId(request.getOfferId());
+        return ResponseEntity.ok("Mail sent successfully for offerId " + request.getOfferId());
     }
 
     // Inner DTO
     public static class MailRequest {
-        private List<String> recipients;
-        private String offerName;
+        private Long offerId;
 
-        public List<String> getRecipients() { return recipients; }
-        public void setRecipients(List<String> recipients) { this.recipients = recipients; }
-        public String getOfferName() { return offerName; }
-        public void setOfferName(String offerName) { this.offerName = offerName; }
+        public Long getOfferId() { return offerId; }
+        public void setOfferId(Long offerId) { this.offerId = offerId; }
     }
 }
