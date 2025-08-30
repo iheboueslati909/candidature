@@ -1,23 +1,22 @@
 package com.example.candidature.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "profile_etudiants")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "favoris")
-public class Favori {
+public class ProfileEtudiant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "offre_id", nullable = false)
-    private Offre offre;
+    @Column(nullable = false)
+    private Double moyenne;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -26,6 +25,6 @@ public class Favori {
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
 
-    public Offre getOffre() { return offre; }
-    public void setOffre(Offre offre) { this.offre = offre; }
+    public Double getMoyenne() { return moyenne; }
+    public void setMoyenne(Double moyenne) { this.moyenne = moyenne; }
 }

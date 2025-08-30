@@ -1,5 +1,6 @@
 package com.example.candidature.controller;
 
+import com.example.candidature.dto.FavoriRequest;
 import com.example.candidature.entity.Favori;
 import com.example.candidature.service.FavoriService;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class FavoriController {
     }
 
     @PostMapping
-    public ResponseEntity<Favori> addFavori(@RequestParam Long userId, @RequestParam Long offreId) {
-        return ResponseEntity.ok(favoriService.addFavori(userId, offreId));
+    public ResponseEntity<Favori> addFavori(@RequestBody FavoriRequest request) {
+        return ResponseEntity.ok(favoriService.addFavori(request.userId(), request.offreId()));
     }
 
     @GetMapping("/user/{userId}")
