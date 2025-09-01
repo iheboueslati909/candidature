@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 
 public record CandidatureResponse(
         Long id,
-        Long userId,
+        String userId,
         String studentName,
         Double moyenne,
         LocalDate dateDebutMobilite,
         String status,
         Long offreId,
+        String offreTitre,
+        String etablissementNom,
         LocalDateTime createdAt
 ) {}

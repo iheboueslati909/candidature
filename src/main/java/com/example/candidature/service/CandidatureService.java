@@ -30,7 +30,7 @@ public class CandidatureService {
                 .orElseThrow(() -> new ResourceNotFoundException("Offre not found with id " + request.offreId()));
 
         Candidature candidature = new Candidature();
-        candidature.setUserId(request.userId());
+    candidature.setUserId(request.userId());
         candidature.setStudentName(request.studentName());
         candidature.setMoyenne(request.moyenne());
         candidature.setDateDebutMobilite(request.dateDebutMobilite());
@@ -46,7 +46,7 @@ public class CandidatureService {
                 .orElseThrow(() -> new ResourceNotFoundException("Candidature not found with id " + id));
     }
 
-    public List<CandidatureResponse> getByUser(Long userId) {
+    public List<CandidatureResponse> getByUser(String userId) {
         return candidatureRepository.findByUserId(userId)
                 .stream()
                 .map(this::toResponse)
@@ -76,6 +76,10 @@ public class CandidatureService {
     }
 
     private CandidatureResponse toResponse(Candidature c) {
+        Offre offre = c.getOffre();
+        String offreTitre = (offre != null) ? offre.getTitre() : null;
+        String etabNom = (offre != null && offre.getEtablissement() != null) ? offre.getEtablissement().getNom() : null;
+
         return new CandidatureResponse(
                 c.getId(),
                 c.getUserId(),
@@ -83,7 +87,9 @@ public class CandidatureService {
                 c.getMoyenne(),
                 c.getDateDebutMobilite(),
                 c.getStatus().name(),
-                c.getOffre().getId(),
+                (offre != null) ? offre.getId() : null,
+                offreTitre,
+                etabNom,
                 c.getCreatedAt()
         );
     }

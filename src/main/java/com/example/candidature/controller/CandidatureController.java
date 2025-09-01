@@ -31,7 +31,7 @@ public class CandidatureController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<CandidatureResponse>> getByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<CandidatureResponse>> getByUser(@PathVariable String userId) {
         return ResponseEntity.ok(candidatureService.getByUser(userId));
     }
 

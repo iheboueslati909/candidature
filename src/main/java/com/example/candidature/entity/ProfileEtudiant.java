@@ -13,7 +13,7 @@ public class ProfileEtudiant {
     private Long id;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(nullable = false)
     private Double moyenne;
@@ -22,8 +22,8 @@ public class ProfileEtudiant {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public Double getMoyenne() { return moyenne; }
     public void setMoyenne(Double moyenne) { this.moyenne = moyenne; }

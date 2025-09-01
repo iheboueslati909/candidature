@@ -28,7 +28,7 @@ public class Candidature {
     private Long id;
 
     @Column(nullable = false)
-    private Long userId;  // comes from Auth service
+    private String userId;  // comes from Auth service
 
     private String studentName;
 
@@ -51,8 +51,8 @@ public class Candidature {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getStudentName() { return studentName; }
     public void setStudentName(String studentName) { this.studentName = studentName; }

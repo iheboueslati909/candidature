@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CandidatureRepository extends JpaRepository<Candidature, Long> {
-    List<Candidature> findByUserId(Long userId);
+    List<Candidature> findByUserId(String userId);
     List<Candidature> findAllByOrderByMoyenneDesc();
 }

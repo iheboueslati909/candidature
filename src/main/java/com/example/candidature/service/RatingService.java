@@ -29,7 +29,7 @@ public class RatingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Etablissement not found with id " + request.etablissementId()));
 
         Rating rating = new Rating();
-        rating.setUserId(request.userId());
+    rating.setUserId(request.userId());
         rating.setEtablissement(etablissement);
         rating.setScore(request.score());
 

@@ -2,7 +2,7 @@ package com.example.candidature.dto;
 
 
 public record RatingRequest(
-        Long userId,
+        String userId,
         Long etablissementId,
         int score
 ) {}

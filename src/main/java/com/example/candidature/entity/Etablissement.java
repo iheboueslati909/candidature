@@ -31,6 +31,7 @@ public class Etablissement {
     @OneToMany(mappedBy = "etablissement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Offre> offres = new ArrayList<>();
 
+    @JsonIgnore 
     @OneToMany(mappedBy = "etablissement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
 

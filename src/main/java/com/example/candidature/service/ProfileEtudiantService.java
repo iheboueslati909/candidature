@@ -4,6 +4,8 @@ import com.example.candidature.dto.ProfileEtudiantRequest;
 import com.example.candidature.dto.ProfileEtudiantResponse;
 import com.example.candidature.entity.ProfileEtudiant;
 import com.example.candidature.repository.ProfileEtudiantRepository;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +30,18 @@ public class ProfileEtudiantService {
     public ProfileEtudiantResponse getById(Long id) {
         return repository.findById(id)
                 .map(this::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("ProfileEtudiant not found with id " + id));
-    }
+                .orElseThrow(() -> new RuntimeException("ProfileEtudiant not found with id " + id));
+    } 
 
-    public ProfileEtudiantResponse getByUserId(Long userId) {
-        return repository.findByUserId(userId)
-                .map(this::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("ProfileEtudiant not found for userId " + userId));
+    public ProfileEtudiantResponse getByUserId(String userId) {
+                ProfileEtudiant profile = repository.findByUserId(userId)
+                .orElseGet(() -> {
+                    ProfileEtudiant newProfile = new ProfileEtudiant();
+                    newProfile.setUserId(userId);
+                    newProfile.setMoyenne(0.0);
+                    return repository.save(newProfile);
+                });
+        return toResponse(profile);
     }
 
     public List<ProfileEtudiantResponse> getAll() {

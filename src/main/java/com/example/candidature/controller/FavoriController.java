@@ -24,7 +24,7 @@ public class FavoriController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Favori>> getUserFavoris(@PathVariable Long userId) {
+    public ResponseEntity<List<Favori>> getUserFavoris(@PathVariable String userId) {
         return ResponseEntity.ok(favoriService.getFavorisByUser(userId));
     }
 

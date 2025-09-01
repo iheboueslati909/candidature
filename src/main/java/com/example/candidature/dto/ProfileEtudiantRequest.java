@@ -1,6 +1,6 @@
 package com.example.candidature.dto;
 
 public record ProfileEtudiantRequest(
-        Long userId,
+        String userId,
         Double moyenne
 ) {}

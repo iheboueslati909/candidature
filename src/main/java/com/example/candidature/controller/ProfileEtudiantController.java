@@ -29,7 +29,7 @@ public class ProfileEtudiantController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ProfileEtudiantResponse> getByUserId(@PathVariable Long userId) {
+    public ResponseEntity<ProfileEtudiantResponse> getByUserId(@PathVariable String userId) {
         return ResponseEntity.ok(service.getByUserId(userId));
     }
 

@@ -19,7 +19,7 @@ public class FavoriService {
         this.offreRepository = offreRepository;
     }
 
-    public Favori addFavori(Long userId, Long offreId) {
+    public Favori addFavori(String userId, Long offreId) {
         Offre offre = offreRepository.findById(offreId)
                 .orElseThrow(() -> new RuntimeException("Offre not found"));
 
@@ -29,7 +29,7 @@ public class FavoriService {
         return favoriRepository.save(favori);
     }
 
-    public List<Favori> getFavorisByUser(Long userId) {
+    public List<Favori> getFavorisByUser(String userId) {
         return favoriRepository.findByUserId(userId);
     }
 
