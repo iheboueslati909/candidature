@@ -32,6 +32,7 @@ public class Offre {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private boolean active = true;
+    private String createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etablissement_id", nullable = false)
@@ -65,4 +66,7 @@ public class Offre {
 
     public List<Candidature> getCandidatures() { return candidatures; }
     public void setCandidatures(List<Candidature> candidatures) { this.candidatures = candidatures; }
+
+    public String getCreatedBy() { return createdBy; }
+    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
 }

@@ -7,5 +7,6 @@ public record OffreRequest(
         String description,
         LocalDate dateDebut,
         LocalDate dateFin,
-        Long etablissementId
+        Long etablissementId,
+        String createdBy
 ) {}

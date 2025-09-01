@@ -1,5 +1,6 @@
 package com.example.candidature.service;
 
+import com.example.candidature.controller.NotificationController;
 import com.example.candidature.dto.CandidatureRequest;
 import com.example.candidature.dto.CandidatureResponse;
 import com.example.candidature.entity.Candidature;
@@ -19,10 +20,13 @@ public class CandidatureService {
 
     private final CandidatureRepository candidatureRepository;
     private final OffreRepository offreRepository;
+    private final NotificationController notificationController;
 
-    public CandidatureService(CandidatureRepository candidatureRepository, OffreRepository offreRepository) {
+    public CandidatureService(CandidatureRepository candidatureRepository, OffreRepository offreRepository,
+    NotificationController notificationController) {
         this.candidatureRepository = candidatureRepository;
         this.offreRepository = offreRepository;
+        this.notificationController = notificationController;
     }
 
     public CandidatureResponse create(CandidatureRequest request) {
@@ -30,13 +34,19 @@ public class CandidatureService {
                 .orElseThrow(() -> new ResourceNotFoundException("Offre not found with id " + request.offreId()));
 
         Candidature candidature = new Candidature();
-    candidature.setUserId(request.userId());
+        candidature.setUserId(request.userId());
         candidature.setStudentName(request.studentName());
         candidature.setMoyenne(request.moyenne());
         candidature.setDateDebutMobilite(request.dateDebutMobilite());
         candidature.setStatus(CandidatureStatus.PENDING);
         candidature.setOffre(offre);
 
+        if(offre.getCreatedBy() != null){
+            notificationController.sendNotification(
+            offre.getCreatedBy(),
+            "New candidature received for offer: " + offre.getTitre()
+            );
+        }
         return toResponse(candidatureRepository.save(candidature));
     }
 

@@ -1,5 +1,6 @@
 package com.example.candidature.service;
 
+import com.example.candidature.controller.NotificationController;
 import com.example.candidature.dto.OffreRequest;
 import com.example.candidature.dto.OffreResponse;
 import com.example.candidature.entity.Etablissement;
@@ -16,10 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class OffreService {
 
+
     private final OffreRepository offreRepository;
     private final EtablissementRepository etablissementRepository;
 
-    public OffreService(OffreRepository offreRepository, EtablissementRepository etablissementRepository) {
+    public OffreService(OffreRepository offreRepository, EtablissementRepository etablissementRepository
+    ) {
         this.offreRepository = offreRepository;
         this.etablissementRepository = etablissementRepository;
     }
@@ -27,7 +30,6 @@ public class OffreService {
     public OffreResponse create(OffreRequest request) {
         Etablissement etablissement = etablissementRepository.findById(request.etablissementId())
                 .orElseThrow(() -> new ResourceNotFoundException("Etablissement not found with id " + request.etablissementId()));
-
         Offre offre = new Offre();
         offre.setTitre(request.titre());
         offre.setDescription(request.description());
@@ -35,6 +37,7 @@ public class OffreService {
         offre.setDateFin(request.dateFin());
         offre.setActive(true);
         offre.setEtablissement(etablissement);
+        offre.setCreatedBy(request.createdBy());
 
         return toResponse(offreRepository.save(offre));
     }
